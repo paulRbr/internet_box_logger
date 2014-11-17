@@ -36,7 +36,7 @@ module InternetBoxLogger
 
 
     def elasticsearch_client
-      @elasticsearch_client ||= Elasticsearch::Client.new hosts: Server[], log: EasyAppHelper.config[:debug], reload_connections: true
+      @elasticsearch_client ||= Elasticsearch::Client.new :hosts => Server[], :log => EasyAppHelper.config[:debug], :reload_connections => true
     end
 
     def save

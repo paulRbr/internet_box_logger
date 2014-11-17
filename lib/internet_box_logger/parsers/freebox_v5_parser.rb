@@ -42,40 +42,40 @@ module InternetBoxLogger
       ]
 
       FIELD_POST_PROCESSING = {
-          up_time: :to_duration,
-          phone_status: :to_bool,
-          phone_hanged_up: :to_bool,
-          phone_ringing: :to_bool,
-          wifi_chanel: :to_int,
-          wifi_state: :to_bool,
-          wifi_network_state: :to_bool,
-          wifi_freewifi_state: :to_bool,
-          wifi_freewifi_secure_state: :to_bool,
-          network_answer_to_ping: :to_bool,
-          network_wake_on_lan: :to_bool,
-          network_dhcp: :to_bool,
-          network_router: :to_bool,
-          adsl_atm_bandwidth_up: :to_bandwidth,
-          adsl_atm_bandwidth_down: :to_bandwidth,
-          adsl_noise_margin_up: :to_db,
-          adsl_noise_margin_down: :to_db,
-          adsl_attenuation_up: :to_db,
-          adsl_attenuation_down: :to_db,
-          adsl_crc_up: :to_num,
-          adsl_crc_down: :to_num,
-          adsl_fec_up: :to_num,
-          adsl_fec_down: :to_num,
-          adsl_hec_up: :to_num,
-          adsl_hec_down: :to_num,
+          :up_time =>:to_duration,
+          :phone_status =>:to_bool,
+          :phone_hanged_up =>:to_bool,
+          :phone_ringing =>:to_bool,
+          :wifi_chanel =>:to_int,
+          :wifi_state =>:to_bool,
+          :wifi_network_state =>:to_bool,
+          :wifi_freewifi_state =>:to_bool,
+          :wifi_freewifi_secure_state =>:to_bool,
+          :network_answer_to_ping =>:to_bool,
+          :network_wake_on_lan =>:to_bool,
+          :network_dhcp =>:to_bool,
+          :network_router =>:to_bool,
+          :adsl_atm_bandwidth_up =>:to_bandwidth,
+          :adsl_atm_bandwidth_down =>:to_bandwidth,
+          :adsl_noise_margin_up =>:to_db,
+          :adsl_noise_margin_down =>:to_db,
+          :adsl_attenuation_up =>:to_db,
+          :adsl_attenuation_down =>:to_db,
+          :adsl_crc_up => :to_num,
+          :adsl_crc_down => :to_num,
+          :adsl_fec_up => :to_num,
+          :adsl_fec_down => :to_num,
+          :adsl_hec_up => :to_num,
+          :adsl_hec_down => :to_num,
       }
 
       UP_DOWN_REPORTS = {
-          adsl_noise_margin: 'Noise Margin',
-          adsl_atm_bandwidth: 'ATM Bandwidth',
-          adsl_attenuation: 'Attenuation',
-          adsl_crc: 'CRC',
-          adsl_fec: 'FEC',
-          adsl_hec: 'HEC'
+          :adsl_noise_margin => 'Noise Margin',
+          :adsl_atm_bandwidth => 'ATM Bandwidth',
+          :adsl_attenuation => 'Attenuation',
+          :adsl_crc => 'CRC',
+          :adsl_fec => 'FEC',
+          :adsl_hec => 'HEC'
       }
 
       attr_accessor :raw_data, :attributes
@@ -127,14 +127,14 @@ module InternetBoxLogger
           %w(up down).each do |measurement_type|
             data_name = "#{measurement}_#{measurement_type}"
             es_object = {
-                index: "#{self.class.name.underscore.tr('/', '_')}_#{measurement}",
-                type: measurement_type
+                :index => "#{self.class.name.underscore.tr('/', '_')}_#{measurement}",
+                :type => measurement_type
             }
             data = {
-                created_at: created_at,
-                name: data_name,
-                description: name,
-                value: attributes[data_name.to_sym]
+                :created_at => created_at,
+                :name => data_name,
+                :description => name,
+                :value => attributes[data_name.to_sym]
             }
             es_object[:body] = data
             res << es_object
@@ -153,9 +153,9 @@ module InternetBoxLogger
         generic_info[:created_at] = created_at
 
         res << {
-            index: "#{self.class.name.underscore.tr('/', '_')}_generic",
-            type: :info.to_s,
-            body: generic_info
+            :index => "#{self.class.name.underscore.tr('/', '_')}_generic",
+            :type => :info.to_s,
+            :body => generic_info
         }
 
         res
